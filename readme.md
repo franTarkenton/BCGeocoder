@@ -39,24 +39,38 @@ things are more of a proof of concept idea.
      - score (an indication of the strength of the match)
      
   
-In the future we may want to add the following options:
+####In the future we may want to add the following options:
+
   - Ability to communicate with the Batch geocoder. Current version 
     is just iterating over a list of values and sending them individually 
     to the geocoder.  Batch would send a batch file.
+    
   - Currently all communication is over http.  May want to 
     add https support.  Some issues with https and python 
     but nothing that can't be resolved. (based on communications
     sent to me by Michael Ross)
+    
   - Reverse Geocoding.
+  
   - Ability to send more precise information.  Instead of sending 
     a single address string, add the ability to separate the 
     parts of the address string and send those individually:
+    
       - siteName
       - unitDesignator
       - unitNumber 
       - etc...
       
-   More Info on individual values available [here] (http://www.data.gov.bc.ca/local/dbc/docs/geo/services/standards-procedures/online_geocoder_rest_api.pdf)
+    More Info on individual values available [here] (http://www.data.gov.bc.ca/local/dbc/docs/geo/services/standards-procedures/online_geocoder_rest_api.pdf)
+    
+  - Add more input file support. Add the ability to input the various 
+    arrays of xls file formats, and the ability to output spatial formats 
+    like .shp, file geodatabase, gml, kml, etc.  Some of this (kml) can be
+    addressed by the geocoder itself.  Doing the translation to the spatial
+    formats in the client code gives more control though.  [GDAL/OGR](http://www.gdal.org) can 
+    address all those requirements. [xlrd and xlwt](http://www.python-excel.org/) can be used to address
+    excel reading in a platform independant manner.
+      
   
 ### Code
 
@@ -75,7 +89,15 @@ addition of 3 columns
  - **precision score** (geocoders response regarding its confidence in the location)
  
  
+#### testData.csv and testData.xlsx
+Both of these are a set of random addresses that were harvested from google maps.  
+The addresses in these files are completely random, based mostly on randomly 
+grabbing addresses from various localities
+ 
+ 
+#### Example run using test data:
 
+python main.py ./bcgeocoder_tests/testData.csv address testDataGeoCoded.csv
 
 
 

@@ -9,15 +9,6 @@ import pprint
 import time
 import urllib2
 
-import site
-
-
-
-depsDir = os.path.join(os.path.dirname(__file__), '..', 'deps\Lib\site-packages')
-#depsDir = r'W:\ilmb\vic\geobc\bier\p15\P15_0096_geocoder\python\deps\Lib\site-packages'
-site.addsitedir(depsDir) # @UndefinedVariable
-
-import chardet  # @UnresolvedImport
 
 
 
