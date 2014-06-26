@@ -4,9 +4,22 @@ Created on Jun 24, 2014
 @author: kjnether
 '''
 import json
+import os
 import pprint
 import time
 import urllib2
+
+import site
+
+
+
+depsDir = os.path.join(os.path.dirname(__file__), '..', 'deps\Lib\site-packages')
+#depsDir = r'W:\ilmb\vic\geobc\bier\p15\P15_0096_geocoder\python\deps\Lib\site-packages'
+site.addsitedir(depsDir) # @UndefinedVariable
+
+import chardet  # @UnresolvedImport
+
+
 
 
 class bcgeocoder(object):
@@ -19,6 +32,7 @@ class bcgeocoder(object):
         self.geoCoderURL = 'http://apps.gov.bc.ca/pub/geocoder/addresses.geojson'
         self.setAlbersProjection()
         self.setCurbDistance()
+        self.setInterpolation()
         self.maxAttempts = 3 # the maximum number of attempts to get an address if a 500 code is received.
         self.waitTime = 3 # time in milliseconds to wait before another attempt at geocoding an address if 500 return code was received
         
@@ -34,7 +48,7 @@ class bcgeocoder(object):
         
     def setAddressString(self, inString):
         # TODO: the query string is very simple at the moment Need to add some logic to check for illegal characters put in exceptions etc..
-        self.addressString = inString.replace(' ', '%')
+        self.addressString = 'addressString=' + inString.replace(' ', '+')
         
     def setInterpolation(self, interpType='none'):
         # TODO: add check to make sure the interpType is adaptive, linear, none
@@ -43,14 +57,18 @@ class bcgeocoder(object):
     def geocode(self, attempt=0):
         queries = '&'.join([self.projParam, self.curDistance, self.interpolation, self.addressString])
         queryUrl = self.geoCoderURL + '?' + queries
+        
         result = urllib2.urlopen(queryUrl)
         resCode = result.getcode()
+        
         geoCodedResult = None
         if resCode == 200:
-            # proceed
+            # proceed 
+
             # Now stuff the results into a GeoCode
             # object, and return it.
-            geoCodedResult = Geocode(result.read())
+            resStr = result.read()
+            geoCodedResult = Geocode(resStr)
         elif resCode == 500:
             # wait and retry
             if attempt >= self.maxAttempts:
@@ -78,6 +96,7 @@ class Geocode(object):
     
     def __init__(self, urlResult):
         self.data = json.loads(urlResult)
+#             self.data = json.loads(urlResult, 'utf-8')
         
     def getCoordinates(self):
         coords = None
@@ -99,7 +118,3 @@ class Geocode(object):
         pp = pprint.PrettyPrinter(indent=4)
         pp.pprint(self.data)
         
-        
-        
-if __name__ == '__main__':
-    

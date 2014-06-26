@@ -25,7 +25,10 @@ class LearningWebServices(unittest.TestCase):
 
     def WebServiceConnectSingleAddressLookup_test(self):
         print 'hello'
-        streetAddress = '852 Dominion Street Kamloops BC'.replace(' ', '%')
+        streetAddress = '144 Fraser Street Lytton BC'
+        
+        streetAddress = streetAddress.replace(' ', '%')
+        
         query = 'addressString=' + streetAddress
         # projection options 3005 albers - others also available, could supply 
         # any projection using pyproj or ogr

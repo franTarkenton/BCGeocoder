@@ -60,52 +60,24 @@ In the future we may want to add the following options:
   
 ### Code
 
-Api is currently all in one file.  bcgeocoder.py
+Have a very simple API that can be used to interact with the geocoder set up in the file bcgeocoder.py
+
+The *main.py* wraps the geocoder functionality.  Its currently pretty simple.  It 
+can receive 3 args
+ - input csv file
+ - name of the column in the csv file with the address string
+ - output csv file
+ 
+The script iterates through the first file, and duplicates it in the second file, with the 
+addition of 3 columns
+ - **x coordinate** (default projection at the moment is albers but would be easy to add this as an option)
+ - **y coordinate** (ditto above for projection) 
+ - **precision score** (geocoders response regarding its confidence in the location)
+ 
+ 
 
 
 
-##### Notes from Brian and Mike - MUST FORMAT THIS
-
-Here's an example of how to request a Geomark in GeoJSON format. Similar approach for KML or SHP.
-
-<Geomark URL><Format><Coord System>
-http://apps.gov.bc.ca/pub/geomark/geomarks/gm-5DF698C668B7431E8BD2EBC1BA67DF34/parts.geojson?srid=3005
-
-
-__________________________________________________________________________________
-Brian 
-
-
-From: Kelsey, Brian GCPE:EX 
-Sent: Tuesday, June 10, 2014 3:34 PM
-To: Netherton, Kevin J FLNR:EX
-Subject: Geocoder request URLs
-
-Kevin,
-
-
-Here’s a quick example of how to request a csv from one of our APIs. Although there are API docs on our website in the ‘ Reference Guides ’ section, I usually just execute a request with the Online Geocoder and have Fiddler running to capture the request URL.
-
-
-CSV:
-http://apps.gov.bc.ca/pub/geocoder/addresses.csv?setBack=0&minScore=1&maxResults=1&interpolation=adaptive&echo=true&outputSRS=4326&addressString=525%20Superior%20St%2C%20victoria&locationDescriptor=any&ver=1.2
-
-GeoJSON:
-http://apps.gov.bc.ca/pub/geocoder/addresses.geojson?setBack=0&minScore=1&maxResults=1&interpolation=adaptive&echo=true&outputSRS=4326&addressString=441%20Columbia%20St%2C%20Kamloops&locationDescriptor=any&ver=1.2
-
-KML:
-http://apps.gov.bc.ca/pub/geocoder/addresses.kml?setBack=0&minScore=1&maxResults=1&interpolation=adaptive&echo=true&outputSRS=4326&addressString=441%20Columbia%20St%2C%20Kamloops&locationDescriptor=any&ver=1.2
-
-
-Regards,
-__________________________________________________________________________________
-Brian Kelsey | Architecture Analyst | Spatial Architecture and Strategic Initiatives | DataBC, Enterprise Data Services | Government Communication and Public Engagement Office
-PHONE: (250) 387-9710
-
-
- has been built and exists.  This project aims
-to create a python script or api that can use the backend geocoder api to 
-perform geocoding tasks.
 
 
 
