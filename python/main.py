@@ -43,6 +43,7 @@ class RunGeoCoderOnFile():
         writer.finish()
         
 if __name__ == '__main__':
+    
     obj = RunGeoCoderOnFile()
     obj.runGeoCoder()
     
