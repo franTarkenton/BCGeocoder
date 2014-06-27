@@ -11,6 +11,7 @@ import bcgeocoder.Writers as Writer
 import sys
 import os.path
 
+
 class RunGeoCoderOnFile():
     
     def __init__(self):
