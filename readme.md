@@ -19,9 +19,9 @@ gis staff. The vision would be to create the following components:
   - A stand along tool that would allow anyone to run the geocoder. This 
     version would be totally independent of arcgis.  
     
-The focus of this project initially be primarily with the construction of a python 
-api that brokers the communication between strngs that are to be geocoded and the 
-results of the submitting those results to a geocoder.
+The focus of this project initially will primarily be with the construction of a python 
+api that brokers the communication between address strings that are to be geocoded and the 
+locations that the geocoder returns for those strings.
 
 ## BC Geocoding API
 
@@ -38,12 +38,15 @@ things are more of a proof of concept idea.
      - projection srs code
      - score (an indication of the strength of the match)
      
+**6-26-2014** - All of the above, except the projection issue are complete
   
 ####In the future we may want to add the following options:
 
   - Ability to communicate with the Batch geocoder. Current version 
     is just iterating over a list of values and sending them individually 
-    to the geocoder.  Batch would send a batch file.
+    to the geocoder (each result currently involves a round trip from python 
+    to the web service, and back).  Batch would send all the addresses at once to the 
+    geocoder, then wait for the geocoder to return with those values.
     
   - Currently all communication is over http.  May want to 
     add https support.  Some issues with https and python 
@@ -60,16 +63,17 @@ things are more of a proof of concept idea.
       - unitDesignator
       - unitNumber 
       - etc...
-   
       
     More Info on individual values available [here] (http://www.data.gov.bc.ca/local/dbc/docs/geo/services/standards-procedures/online_geocoder_rest_api.pdf)
     
   - Add more input file support. Add the ability to input the various 
-    arrays of xls file formats, and the ability to output spatial formats 
-    like .shp, file geodatabase, gml, kml, etc.  Some of this (kml) can be
+    flavours of excel formats, and the ability to output spatial formats 
+    like .shp, file geodatabase, gml, kml, etc.  Some of this (*kml*) can be
     addressed by the geocoder itself.  Doing the translation to the spatial
     formats in the client code gives more control though.  [GDAL/OGR](http://www.gdal.org) can 
-    address all those requirements. [xlrd and xlwt](http://www.python-excel.org/) can be used to address
+    be used to write all the listed spatial files and [more](http://www.gdal.org/ogr_formats.html).
+    
+    [xlrd and xlwt](http://www.python-excel.org/) can be used to address
     excel reading in a platform independant manner.
       
   
@@ -78,13 +82,14 @@ things are more of a proof of concept idea.
 Have a very simple API that can be used to interact with the geocoder set up in the file bcgeocoder.py
 
 The *main.py* wraps the geocoder functionality.  Its currently pretty simple.  It 
-can receive 3 args
+can receive 3 args:
+
  - input csv file
  - name of the column in the csv file with the address string
  - output csv file
  
 The script iterates through the first file, and duplicates it in the second file, with the 
-addition of 3 columns
+addition of 3 columns containing the information retrieved from the geocoder.
  - **x coordinate** (default projection at the moment is albers but would be easy to add this as an option)
  - **y coordinate** (ditto above for projection) 
  - **precision score** (geocoders response regarding its confidence in the location)
@@ -98,7 +103,9 @@ grabbing addresses from various localities
  
 #### Example run using test data:
 
-python main.py ./bcgeocoder_tests/testData.csv address testDataGeoCoded.csv
+```python
+python main.py ./bcgeocoder_tests/testData.csv address outputFileWithCoords.csv
+```
 
 
 
