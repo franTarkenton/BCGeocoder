@@ -65,14 +65,14 @@ class bcgeocoder(object):
             if attempt >= self.maxAttempts:
                 msg = 'Unable to retrieve an address for the string (' + \
                       self.addressString + ') Received response code ' + \
-                      '500 three times.'
+                      '500 ' + str(self.maxAttempts) + ' times.'
                 raise urllib2.URLError, msg
             else:
                 attempt += 1
                 time.sleep(self.waitTime)
                 geoCodedResult = self.geocode(attempt)
         else:
-            msg = 'Recieved a result code of: ' + str(resCode) + ' The url ' + \
+            msg = 'Received a result code of: ' + str(resCode) + ' The url ' + \
                  'that we were requesting is: (' + str(queryUrl) + ') unable to ' + \
                  'get the results we are looking for from that url.'
             raise urllib2.URLError, msg

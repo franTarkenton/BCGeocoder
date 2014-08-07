@@ -11,7 +11,6 @@ site.addsitedir(depsDir) # @UndefinedVariable
 import xlrd # @UnresolvedImport
 import csv
 
-
 class ReadCSV():
     
     def __init__(self, inputCSVFile):
