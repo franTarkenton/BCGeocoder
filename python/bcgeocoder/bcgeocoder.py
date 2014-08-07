@@ -77,7 +77,7 @@ class bcgeocoder(object):
         postal code etc.  The web service makes allowances for this type of 
         query but this python interface currently does not.
         
-        :param  inString: input address string that we wish to geocode..
+        :param  inString: input address string that we wish to geocode.
         :type inString: string
         '''
         # TODO: the query string is very simple at the moment Need to add some logic to check for illegal characters put in exceptions etc..

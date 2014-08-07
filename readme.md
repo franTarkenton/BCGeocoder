@@ -40,6 +40,29 @@ things are more of a proof of concept idea.
      
 **6-26-2014** - All of the above, except the projection issue are complete
   
+####Identified Changes Required
+Based on feedback from meeting with DataBC on 8-7-2014 we should make the 
+following changes to the existing script:
+
+  - Currently the script duplicates an existing csv file and adds the columns
+    x, y, and precision points.  Need to modify the script so that it also 
+    returns the following:
+    
+    - **Address** that gets returned by the geocoder.  This can be different 
+      from the address supplied.  It will include the changes that the 
+      geocoder made to the address.
+    	  
+    - The script should also return the **Faults** and **Score**
+    
+  - Modify the code so that it can handle multiple returns for a single address
+  
+  - Currently the script requests that the geocoder returns the data in JSON
+    format.  This has its advantages as the JSON can be very easily converted
+    to python data structures which gives you complete control over where it
+    goes and any transformations that need to take place in the process.  It 
+    would be useful to investigate whether requesting the data to be returned
+    as csv offers any efficiencies.
+ 
 ####In the future we may want to add the following options:
 
   - Ability to communicate with the Batch geocoder. Current version 
